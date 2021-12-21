@@ -1,3 +1,27 @@
+dinoData = fetch("./dino.json")
+  .then((response) => response.json())
+  .then((data) => {
+    let dinos = data.Dinos;
+    console.log(dinos);
+    return dinos;
+    // getDinos(dData);
+  }).catch(error => {console.log(error);});
+
+  // dinoData();
+
+  console.log(dinoData);
+
+  function getDinos (data) {
+    let dinos = data; 
+    dinos.map((dino) => {
+      console.log(dino.species);
+      let dinoObj = new Dinosaur(dino.species, dino.weight, dino.height, dino.diet, dino.fact)
+      console.log(dinoObj);
+    });
+
+  }
+
+// function getDinos() {
 // importing images into app.js
 
 //  Dino Constructor function
@@ -9,8 +33,8 @@ class Dinosaur {
     this.height = height;
     this.where = where;
     this.when = when;
-    (this.fact = fact),
-      (this.image = "/images" + species.toLowerCase() + "png");
+    this.fact = fact,
+      this.image = "/images" + species.toLowerCase() + "png";
   }
   compareWeight(personWeight) {
     if (personWeight === this.weight) {
@@ -49,6 +73,20 @@ class Dinosaur {
       return "You both have a balanced diet of meat and veg!";
     }
   }
+  
+  randomFacts = (species) => {
+    let randomFactGenerator = Math.floor(Math.random() * 10);
+    
+    switch (randomFactGenerator) {
+    case 2 : return this.compareDiet(species);
+
+    case 5: return this.compareWeight;
+
+    case 7: return this.compareHeight;
+
+    default: return this.fact;
+  }
+  }
 }
 
 // TODO: spread operator to concat comparisons and facts
@@ -70,45 +108,27 @@ class Dinosaur {
 //   });
 // })();
 
-dinoData = fetch("./dino.json")
-  .then((response) => response.json())
-  .then((data) => {
-    let dinos = data.Dinos;
-    console.log(dinos);
-    return dinos;
-  }).catch(error => {console.log(error);});
 
-  console.log(dinoData);
+// let dinos = [];
+
+// const dinoData = async () => {
+// const fetchedData = await fetch("./dino.json")
+// const data = await fetchedData.json;
+// return data.Dinos;
+// }
 
 
 // TODO: get dinosaurs
-const dinosaurs = dinos.map(
-  (dino) => new Dinosaur(dino.species, dino.weight, dino.height, dino.diet)
-);
+//   let dinoArray = [];
+// const dinosaurs = dinos.map(
+//   (dino) => new Dinosaur(dino.species, dino.weight, dino.height, dino.diet, dino.fact)
+// );
+// }
 
-console.log(dinosaurs);
+
+// console.log(dinosaurs);
 
 // Create Human Object
-
-// Use IIFE to get human data from form
-
-getPerson = (function getPerson() {
-  const personName = document.getElementById("name").value;
-  const personFeet = document.getElementById("feet").value;
-  const personInches = document.getElementById("inches").value;
-  const personHeight = personFeet * 12 + personInches;
-  const personWeight = document.getElementById("weight").value;
-  const personDiet = document.getElementById("diet").value;
-  const personObject = new Human(
-    personName,
-    personFeet,
-    personInches,
-    personWeight,
-    personHeight,
-    personDiet
-  );
-  return personObject;
-})();
 
 class Human {
   constructor(
@@ -130,6 +150,27 @@ class Human {
     this.image = "/images" + species.toLowerCase() + "png";
   }
 }
+// Use IIFE to get human data from form
+
+const getPerson = ( () => {
+  const form = document.getElementById('dino-compare')
+  const personName = document.getElementById("name").value;
+  const personFeet = document.getElementById("feet").value;
+  const personInches = document.getElementById("inches").value;
+  const personHeight = (personFeet * 12) + personInches;
+  const personWeight = document.getElementById("weight").value;
+  const personDiet = document.getElementById("diet").value;
+  const personObject = new Human(
+    personName,
+    personFeet,
+    personInches,
+    personWeight,
+    personHeight,
+    personDiet
+  );
+  return personObject;
+})();
+
 
 // generate dino tiles
 
@@ -146,7 +187,13 @@ const getDinoTiles = (dinosaurs) => {
 };
 // generate human tile
 
-// random tiles and facts Math.random(Math.floor)
+// random tiles and facts 
+
+let randomNumber = (arr) => Math.floor(Math.random * arr.length);
+
+
+// TODO: Make another function to push the returned fact from the compare functions as well as the original fact from the Dino's array.
+
 
 // function that creates new Dinosaur()
 
@@ -224,35 +271,45 @@ let tileArray = [];
 
 // human should be index of 4
 
-let dinoTiles = () => {
+let dinoTiles = async () => {
   // local variable for dino data here?
-  dinos.map((dinosaur) => {
+
+  const dinos = await dinoData();
+  dinos.map((dino) => {
+    console.log(dino.species)
     const dinoGrid = getElementById("grid");
     const dinoTile = document.createElement("div");
     dinoTile.classList.add("grid-item");
     // let element = document.createElement("div");
 
     dinoTile.innerHTML(`<h3>${dinosaur.species}</h3
-  <p>${dinosaur.fact} </p>
-  <p>${dinosaur.height}</p>
-  <img src='images/${dinosaur.species}.png'>`);
+  <p>${dino.fact} </p>
+  <p>${dino.height}</p>
+  <p>${dino.fact}</p>
+  <img src='images/${dino.species}.png'>`);
 
-    dinoGrid.appendChild(dinoTile);
-  });
+  const humanTile = document.createElement("div");
+  humanTile.classList.add("grid-item");
+
+  humanTile.innerHTML(`<h3>${humanTile.name}</h3>
+  <img src='images/${human}.png'`);
+  dinos.splice(4, 0, humanTile);
+ dinoGrid.appendChild(dinoTile);
+});
 };
 
 // let humanTile = (human) => {
 
-let humanTile = (human) => {
-  // dinos array variable
-  const humanGrid = document.getElementById("grid");
-  humanTile = document.createElement("div");
-  humanTile.classList.add("grid-item");
+// let humanTile = (human) => {
+//   // dinos array variable
+//   const humanGrid = document.getElementById("grid");
+//   humanTile = document.createElement("div");
+//   humanTile.classList.add("grid-item");
 
-  humanTile.innerHTML(`<h3>${humanTile.name}</h3>`);
-  //     dinos.splice(4, 0, humanTile); or...
-  // grid.createElement("div").appendChild(humanTile);
-};
+//   humanTile.innerHTML(`<h3>${humanTile.name}</h3>`);
+//       dinos.splice(4, 0, humanTile);
+  
+// };
 
 // let dinoFacts = {
 //   Triceratops
@@ -281,10 +338,13 @@ let removeForm = () => {
 };
 
 const displayTiles = () => {
-  const showGrid = (document.getElementById("grid").style.display = "block");
+  const showGrid = document.getElementById("grid").style.display = "block";
+  dinoTiles();
+
 };
 
-document.getElementById("btn").addEventListener("click", (e) => {
+let btn = document.getElementById("btn")
+btn.addEventListener("click", (e) => {
   e.preventDefault();
   removeForm();
   getPerson();
