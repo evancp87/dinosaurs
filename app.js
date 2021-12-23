@@ -1,33 +1,3 @@
-dinoData = fetch("./dino.json")
-  .then((response) => response.json())
-  .then((data) => {
-    let dinos = data.Dinos;
-    console.log(dinos);
-    return dinos;
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
-console.log(dinoData);
-
-function getDinos(data) {
-  let dinos = data;
-  dinos.map((dino) => {
-    console.log(dino.species);
-    const dinoObj = new Dinosaur(
-      dino.species,
-      dino.weight,
-      dino.height,
-      dino.diet,
-      dino.fact
-    );
-    console.log(dinoObj);
-  });
-}
-
-// importing images into app.js
-
 //  Dino Constructor function
 class Dinosaur {
   constructor(species, diet, weight, height, where, when, fact, image) {
@@ -38,7 +8,7 @@ class Dinosaur {
     this.where = where;
     this.when = when;
     this.fact = fact,
-    this.image = "/images" + species.toLowerCase() + "png";
+    this.image = image
   }
 
   //  Dino Compare Method 1
@@ -86,6 +56,8 @@ class Dinosaur {
     }
   }
 
+
+
   // randomize facts
   randomFacts = () => {
     let randomFactGenerator = Math.floor(Math.random() * 10);
@@ -105,6 +77,145 @@ class Dinosaur {
     }
   };
 }
+
+
+let dinos = [];
+fetch("./dino.json")
+  .then((res) => res.json())
+  .then((data) => {
+    let dinos = data.Dinos;
+    console.log(dinos);
+    getDinos(dinos);
+  });
+
+  function getDinos(dinos) {
+    dinos.map((dino) => console.log(dino));
+  
+  }
+
+
+// const getDinos = async () => {
+//   const fetchedJson = await fetch("./dino.json")
+//   const data = await fetchedJson.json;
+//   return data.Dinos
+  
+// }
+
+// getDinos().then(data => {
+//   console.log(data)
+//   let dinos = data.forEach(dino => new Dinosaur(dino.species,
+//     dino.diet,
+//     dino.weight,
+//     dino.height,
+//     dino.where,
+//     dino.when,
+//     dino.fact,
+//     dino.image))
+// }).catch(error => {console.error(error);});
+
+// getDinos().then(data => {
+//   then((data) => {
+//     let dinos =
+//     //     let dinos = data.Dinos
+//     //     console.log(dinos);
+//     //     return dinos;
+// })
+// async function dinoData() {
+
+//   const fetchData = await fetch("./dino.json")
+//   const data = await fetchData.json;
+//   console.log(data);
+//   return data.Dinos;
+//   }
+
+//   const dinos= [];
+//   window.onLoad = async () => {
+//     const dinoArray = await dinoData();
+    
+//     dinoArray.map(item => {
+//       const dino = new Dinosaur(
+//         item.species,
+//         item.weight,
+//         item.height,
+//         item.where,
+//         item.when,
+//         item.fact,
+//         item.image
+//         )
+//         dinos.push(dino);
+
+//       })
+//     }
+
+
+// dinoData = fetch("./dino.json")
+//   .then((response) => response.json())
+//   .then((data) => {
+//     let dinos = data.Dinos
+//     console.log(dinos);
+//     return dinos;
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//   });
+
+
+// 
+ 
+  
+
+  // function dinoData ()
+  // { 
+  //   return fetch("./dino.json")
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     let dinos = data.Dinos;
+  //     console.log(dinos);
+  //     return dinos;
+  //   })
+  //   .catch((error) => {
+  //     console.log('error', error);
+  //   });
+  // }
+
+// console.log(dinoData);
+
+
+// function getDinos(dinoData) {
+//   let dinos = dinoData;
+//   dinos.map((dino) => {
+//     console.log(dino.species);
+//     const dinoObj = new Dinosaur(
+//       dino.species,
+//       dino.weight,
+//       dino.height,
+//       dino.diet,
+//       dino.fact
+//     );
+//     console.log(dinoObj);
+//     return dinoObj
+//   });
+// }
+
+
+// function getDinos(dinoData) {
+//   let dinos = dinoData;
+//   dinos.map((dino) => {
+//     console.log(dino.species);
+//     const dinoObj = new Dinosaur(
+//       dino.species,
+//       dino.weight,
+//       dino.height,
+//       dino.diet,
+//       dino.fact
+//     );
+//     console.log(dinoObj);
+//     return dinoObj
+//   });
+// }
+
+// importing images into app.js
+
 
 // TODO: spread operator to concat comparisons and facts
 
@@ -144,7 +255,6 @@ class Dinosaur {
 
 class Human {
   constructor(
-    species,
     personName,
     personDiet,
     personWeight,
@@ -159,7 +269,7 @@ class Human {
     this.feet = feet;
     this.inches = inches;
     this.height = height;
-    this.image = "/images" + species.toLowerCase() + "png";
+    this.image = './images/human.png'
   }
 }
 // Use IIFE to get human data from form
@@ -196,7 +306,7 @@ function getPerson() {
 
 // random tiles and facts
 
-let randomNumber = (arr) => Math.floor(Math.random * arr.length);
+
 
 
 // using this with callback functions requires using .bind();  dinosaur.fact.bind(dinosaur);- can save as variable and pass into functions
@@ -211,15 +321,23 @@ let randomNumber = (arr) => Math.floor(Math.random * arr.length);
 // tileArray
 
 //TODO: can use createElement- save as a variable and then element.classList.add('your-class');
-let tileArray = [];
 
 // human should be index of 4
 
-let dinoTiles = async () => {
+let dinoTiles =  () => {
   // local variable for dino data here?
+  let tileArray;
+  compareWeight(personObject);
+  compareHeight(personObject);
+  compareDiet(personObject);
+  randomFacts(personObject);
 
-  const dinos = await dinoData();
-  dinos.map((dino) => {
+
+// TODO: remember to change this
+  const dinos =  getDinos();
+  // dinos.map((dino) => 
+  
+  for (dino of dinos) {
     console.log(dino.species);
     const dinoGrid = getElementById("grid");
     const dinoTile = document.createElement("div");
@@ -242,30 +360,88 @@ let dinoTiles = async () => {
   <img src='images/${human}.png'`);
     dinos.splice(4, 0, humanTile);
     dinoGrid.appendChild(dinoTile);
-  });
+    tileArray.push(dinoTile);
+    const allTiles = [...tileArray, ...humanTile];
+    console.log(allTiles);
+  };
 };
+
+
+
+// TODO: spread operator let tiles = [...dinos, ...human]; or let tiles = dinos.concat.(human);
 
 
 // remove method
 
-// for loop to generate tiles;
+
 
 // On button click, prepare and display infographic
 
 
-let btn = document.getElementById("btn");
-btn.addEventListener("click", (e) => {
-  e.preventDefault();
-  let removeForm = () => {
-    const formRemove = (document.getElementById("dino-compare").style.display =
-    "none");
-  };
-  removeForm();
-  const displayTiles = () => {
-  const showGrid = document.getElementById("grid").style.display = "block";
-  // dinoTiles();
-  };
+// let btn = document.getElementById("btn");
+// btn.addEventListener("click", (e) => {
+//   e.preventDefault();
+//   let removeForm = () => {
+//     const formRemove = (document.getElementById("dino-compare").style.display =
+//     "none");
+//   };
+//   removeForm();
+//   const displayTiles = () => {
+//   const showGrid = document.getElementById("grid").style.display = "block";
+//   // dinoTiles();
+//   };
 
-  getPerson();
-  displayTiles();
-});
+//   getPerson();
+//   displayTiles();
+// });
+
+// const dinoData = fetch("./dino.json")
+//   .then((response) => response.json())
+//   .then((data) => {
+//     console.log(data)
+//     let dinos = data.Dinos.map((dino) =>
+//     new Dinosaur(
+//       dino.species,
+//       dino.weight,
+//       dino.height,
+//       dino.diet,
+//       dino.where,
+//       dino.when,
+//       dino.fact, dino.image
+//       )
+     
+//       )
+      document.getElementById("btn").addEventListener("click", (e) => {
+  //       const dinoData = fetch("./dino.json")
+  // .then((response) => response.json())
+  // .then((data) => {
+  //   console.log(data)
+  //   let dinos = data.Dinos.map((dino) =>
+  //   new Dinosaur(
+  //     dino.species,
+  //     dino.weight,
+  //     dino.height,
+  //     dino.diet,
+  //     dino.where,
+  //     dino.when,
+  //     dino.fact, dino.image
+  //     )
+     
+  //     )
+        e.preventDefault();
+        let removeForm = () => {
+          const formRemove = (document.getElementById("dino-compare").style.display =
+          "none");
+        };
+        removeForm();
+        const displayTiles = () => {
+          const showGrid = document.getElementById("grid").style.display = "block";
+          // dinoTiles();
+        };
+        // const human = new human;
+        getPerson();
+        dinoTiles()
+;        displayTiles();
+      });
+      
+    // }) 
