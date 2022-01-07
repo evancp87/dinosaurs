@@ -7,82 +7,53 @@ class Dinosaur {
     this.height = height;
     this.where = where;
     this.when = when;
-    this.fact = fact; 
+    this.fact = fact;
     this.image = image;
   }
-
 }
 //  Dino Compare Method 1
 
+Dinosaur.prototype.compareDiet = function (personDiet) {
+  if (personDiet === "herbivor") {
+    this.diet = "You both enjoy a plant based diet!";
+  } else if (personDiet === "omnivor") {
+    this.diet = "You both have a balanced diet of 🥩 and 🥦!";
+  } else if (personDiet === "carnivor") {
+    this.diet = "You're both like your 🍔 🍗 🥩!";
+  } 
+};
+
+
+//  Dino Compare Method 2
 Dinosaur.prototype.compareWeight = function (personWeight) {
   if (personWeight === this.weight) {
-    return "You weigh the same as this dinosaur!";
+    this.weight = "You weigh the same as this dinosaur!";
   } else if (personWeight < this.weight) {
-    return `This dinosaur weighed ${Math.round(
+    this.weight = `This dinosaur weighed ${Math.round(
       this.weight - personWeight
     )} more than you!`;
   } else if (personWeight > this.weight) {
-    return `This dinosaur weighed ${Math.round(
+    this.weight = `This dinosaur weighed ${Math.round(
       personWeight - this.weight
-    )} less pounds than you!`;
-  
-}
-return result;
-}
+    )} less than you!`;
+  }
+};
 
-//  Dino Compare Method 2
 
+//  Dino Compare Method 3
 Dinosaur.prototype.compareHeight = function (personHeight) {
   if (personHeight > this.height) {
-    return `This dinosaur was ${Math.round(
+    this.height = `This dinosaur was ${Math.round(
       (personHeight - this.height) * 12
     )} inches shorter than you!`;
   } else if (personHeight === this.height) {
-    return "This dinosaur was the same height as you!";
+    this.height = "This dinosaur was the same height as you!";
   } else if (personHeight < this.height) {
-    return `This dinosaur was ${Math.round(
+    this.height = `This dinosaur was ${Math.round(
       (this.height - personHeight) * 12
     )} inches taller than you!`;
   }
-  return result;
-}
-
-//  Dino Compare Method 3
-
-Dinosaur.prototype.compareDiet = function (personDiet) {
-  if (personDiet === "herbivor") {
-    return "You both enjoy a plant based diet!";
-  } else if (personDiet === "carnivor") {
-    return "You're both pure meat eaters 🍔 🍗 🥩!";
-  } else if (personDiet === "omnivor") {
-    return "You both have a balanced diet of 🥩 and 🥦!";
-  }
-  return result;
-}
-
-// randomize facts
-//   randomFacts = () => {
-//     let randomFactGenerator = Math.floor(Math.random() * 10);
-//     // function randomNum(min, max) {
-//    // return Math.floor(Math.random() * (max - min + 1) ) + min;
-//   //}
-
-//     switch (randomFactGenerator) {
-//       case 3:
-//         return this.compareDiet();
-//         break;
-
-//       case 5:
-//         return this.compareWeight();
-// break;
-//       case 7:
-//         return this.compareHeight();
-// break;
-//       default:
-//         return this.fact;
-//     }
-//   };
-
+};
 
 
 
@@ -93,31 +64,28 @@ Dinosaur.prototype.compareDiet = function (personDiet) {
 //   return data;
 // }
 
-// fetch and create dino objects 
+// fetch and create dino objects
 const getDinos = fetch("./dino.json")
   .then((response) => response.json())
   .then((data) => {
-    console.log(data)
-    return data.Dinos.map((dino) => 
-    new Dinosaur(
-      dino.species,
-      dino.diet,
-      dino.weight,
-      dino.height,
-      dino.where,
-      dino.when,
-      dino.fact, 
-      dino.image
-      )
-    
-      );
-      
-    
-    }
-  ).catch(error => {console.log(error)})
-
-
-
+    console.log(data);
+    return data.Dinos.map(
+      (dino) =>
+        new Dinosaur(
+          dino.species,
+          dino.diet,
+          dino.weight,
+          dino.height,
+          dino.where,
+          dino.when,
+          dino.fact,
+          dino.image
+        )
+    );
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
 // Create Dino Objects
 
@@ -127,7 +95,7 @@ const getDinos = fetch("./dino.json")
 // Create Human Constructor
 
 class Human {
-  constructor(name,  height, weight, diet) {
+  constructor(name, height, weight, diet) {
     this.name = name;
     this.species = "human";
     // this.feet = feet;
@@ -135,130 +103,122 @@ class Human {
     this.height = height;
     this.weight = weight;
     this.diet = diet;
-    this.image = "./images/human.png";
+    this.image = "images/human.png";
   }
 }
 // Use IIFE to get human data from form
 
 // Create Human Object
 
-
 // Add tiles to DOM
 
 // tileArray
 
-
-// Get human data from form 
+// Get human data from form
 
 function getPersonData() {
-const personName = document.getElementById("name").value;
-const personHeight = Number(document.getElementById("feet").value) * 12 + Number(document.getElementById("inches").value);
-const personWeight = document.getElementById("weight").value;
-const personDiet = document.getElementById("diet").value;
-const personObject = new Human(
-personName,
-personHeight,
-personWeight,
-personDiet
-);
-return personObject;
+  const personName = document.getElementById("name").value;
+  const personHeight =
+    Number(document.getElementById("feet").value) * 12 +
+    Number(document.getElementById("inches").value);
+  const personWeight = document.getElementById("weight").value;
+  const personDiet = document.getElementById("diet").value;
+  const personObject = new Human(
+    personName,
+    personHeight,
+    personWeight,
+    personDiet
+  );
+  return personObject;
 }
 
+const randomFacts = (dino) => {
+  const randomFactArray = [
+    dino.fact,
+    dino.compareDiet(dino.diet),
+    dino.compareHeight(dino.height),
+    dino.compareWeight(dino.weight),
+  ];
+
+  const randomFactGenerator = Math.floor(
+    Math.random() * randomFactArray.length
+  );
+  return randomFactArray[randomFactGenerator];
+};
+
+const shuffleTiles = (arr) => {
+  arr.sort(() => Math.random() - 0.5);
+};
 // Generate Tiles for each Dino in Array
 const dinoTiles = (personData) => {
+  getDinos.then((dinos) => {
+    dinos.map((dino) => {
+      // let randomResult = '';
 
- 
-  getDinos.then(dinos => {
-    // dinos.splice(0,4, personData);
-   dinos.map(dino => { 
-     
-    //  if (dino.species === 'human') {
-    //    return dino.species = personData.name;
-    //   } else if (dino.species === 'pigeon') {
-    //     return dino.fact = 'All dinosaurs are living dinosaurs';
-    //   }
-      
-      // let randomFactGenerator = Math.floor(Math.random() * 10);
-      // // function randomNum(min, max) {
-      //   // return Math.floor(Math.random() * (max - min + 1) ) + min;
-      //   //}
-        
-       
-          
-      //     switch (randomFactGenerator) {
-      //       case 3:
-      //          dino.compareDiet(personData);
-      //         break;
+      if (dino.species === "human") {
+        dino.species = personData.name;
+      } else if (dino.species === "pigeon") {
+        dino.species = dino.species;
+
+      } 
+      // else {
+      //   let randomFactGenerator = Math.floor(Math.random() * 10);
+      //         switch (randomFactGenerator) {
+      //             case 3:
+      //                randomResult = dino.compareDiet(personData.diet);
+      //               break;
+      //               case 5:
+      //                 randomResult =  dino.compareWeight(personData.weight);
+      //                 break;
+      //                 case 7:
+      //                   randomResult =  dino.compareHeight(personData.height);
+      //                   default:
+      //                      dino.fact;
+      //                   }
+      //                   ;
+      // }
+
+
+      const dinoGrid = document.getElementById("grid");
+      const dinoTile = document.createElement("div");
+      dinoTile.classList.add("grid-item");
+
+      dinoTile.innerHTML = `<h3>${dino.species}</h3>
+                <img src='images/${dino.species.toLowerCase()}.png' alt='${
+        dino.species
+      } image'>
               
-      //         case 5:
-      //            dino.compareWeight(personData);
-      //           break;
-      //           case 7:
-      //              dino.compareHeight(personData);
-      //             default:
-      //                dino.fact;
-      //             }
-                 
-      //             ;
-          
-                
-                
-                
-                
-                // TODO: remember to change this
-                
-                const dinoGrid = document.getElementById("grid");
-                const dinoTile = document.createElement("div");
-                dinoTile.classList.add("grid-item");
-                
-                dinoTile.innerHTML = `<h3>${dino.species}</h3>
-                <img src='../images/${dino}.png' alt='${dino.species} image'>
-               
-                <p>${dino.fact}</p>`;
-                
-                if (dino.species === "pigeon") {
-                  dinoTile.innerHTML = `<p>All birds are dinosaurs</p>`;
-                } else if (dino.species === 'human') {
-                  dinoTile.innerHTML = `<h3>${humanTile.name}</h3>
-                  <img src='images/${humanTile}.png'`
-                }
-                
-                // const humanTile = document.createElement("div");
-                // humanTile.classList.add("grid-item");
-                
-                // humanTile.innerHTML(`<h3>${humanTile.name}</h3>
-                // <img src='images/${humanTile}.png'`);
-                dinoGrid.appendChild(dinoTile);
+                <p>${randomFacts(dino)}</p>`;
+                // <p>${randomFacts(dino)}</p>
 
-                // human = getPersonData();
+      if (dino.species === "pigeon") {
+        dinoTile.innerHTML = `<p>All birds are dinosaurs</p>`;
+      } else if (dino.species === "human") {
+        dinoTile.innerHTML = `<h3>${personData.name}</h3>
+                  <img src='images/human.png'`;
+      }
 
-                // dinos.splice(0,4, human);
-                // dinoGrid.splice(4, 0, humanTile);
-                // tileArray.push(dinoArrays);
-                // const allTiles = [...tileArray, ...humanTile];
-                // console.log(allTiles);
-              })
-            })
-              
-            };
-            
 
-// TODO: spread operator let tiles = [...dinos, ...human]; or let tiles = dinos.concat.(human);
-
+      dinoGrid.appendChild(dinoTile);
+      let dinoArray = dinos;
+      dinoArray.splice(4, 0, personData);
+      shuffleTiles(dinoArray);
+      // randomFacts(dino);
+      return newArray = [...dinos];
+    });
+  });
+};
 
 
 // On button click, prepare and display infographic
 document.getElementById("btn").addEventListener("click", (e) => {
-  
   e.preventDefault();
   let removeForm = () => {
     const formRemove = (document.getElementById("dino-compare").style.display =
       "none");
   };
   removeForm();
-  
+
   const human = getPersonData();
   dinoTiles(human);
 });
-
-
