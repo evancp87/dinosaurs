@@ -219,14 +219,14 @@ document.getElementById("btn").addEventListener("click", (e) => {
           dinoTile.innerHTML = `<p>All birds are dinosaurs</p>`;
         } else if (dino.species === "human") {
           dinoTile.innerHTML = `<h3>${personData.name}</h3>
-                    `;
+          <img src='images/${dino.species || 'human'}.png' alt='${dino.species} image'>      `;
         }
-  
+      
   
         dinoGrid.appendChild(dinoTile);
         let dinoArray = dinos;
+        // shuffleTiles(dinoArray);
         // dinoArray.splice(4, 0, personData);
-        shuffleTiles(dinoArray);
         // randomFacts(dino);
         // return newArray = [...dinos];
         return newArray = [...dinos, personData];
