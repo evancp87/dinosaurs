@@ -166,19 +166,19 @@ document.getElementById("btn").addEventListener("click", (e) => {
 
         if (dino.species === "Pigeon") {
           dinoTile.innerHTML = `<p>All birds are dinosaurs</p>
-          <img src='images/${dino.species || "human"}.png' alt='${
+          <img src="images/${dino.species || "human"}.png" alt="${
             dino.species
-          } image'> `;
+          } image"> `;
         } else if (dino.species === "human") {
           dinoTile.innerHTML = `<h3>${personData.name}</h3>
-          <img src='images/${dino.species || "human"}.png' alt='${
+          <img src="images/${dino.species || "human"}.png" alt="${
             dino.species
-          } image'>      `;
+          } image">      `;
         } else {
           dinoTile.innerHTML = `<h3>${dino.species}</h3>
-                  <img src='images/${dino.species || "human"}.png' alt='${
+                  <img src="images/${dino.species || "human"}.png" alt="${
             dino.species
-          } image'>
+          } image">
                 
        <p>${randomFacts(dino, dinos[4])}</p>`;
         }

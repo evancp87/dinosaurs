@@ -1,0 +1,22 @@
+{
+  "name": "dinosaurs-project",
+  "version": "1.0.0",
+  "description": "## Student Instructions",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evancp87/dinosaurs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evancp87/dinosaurs/issues"
+  },
+  "homepage": "https://github.com/evancp87/dinosaurs#readme",
+  "devDependencies": {
+    "eslint": "^8.6.0"
+  }
+}
