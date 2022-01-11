@@ -75,7 +75,7 @@ Dinosaur.prototype.compareHeight = function (human) {
 const getDinos = fetch("./dino.json")
   .then((response) => response.json())
   .then((data) => {
-    console.log(data);
+    // console.log(data);
     return data.Dinos.map(
       (dino) =>
         new Dinosaur(
@@ -91,7 +91,7 @@ const getDinos = fetch("./dino.json")
     );
   })
   .catch((error) => {
-    console.log(error);
+    console.error(error);
   });
 
 // Create Human Constructor
@@ -149,13 +149,8 @@ const shuffleTiles = (arr) => {
 document.getElementById("btn").addEventListener("click", (e) => {
   e.preventDefault();
 
-  if (name.value === '' || feet.value === '' || inches.value === '' || weight.value === '' || diet.value === '') {
-    alert('Please fill in all fields');
-    return false;
-  } 
   let removeForm = () => {
-    const formRemove = (document.getElementById("dino-compare").style.display =
-      "none");
+    document.getElementById("dino-compare").style.display = "none";
   };
   removeForm();
 
@@ -189,7 +184,7 @@ document.getElementById("btn").addEventListener("click", (e) => {
         }
 
         dinoGrid.appendChild(dinoTile);
-        return (newArray = [...dinos, personData]);
+        // return (newArray = [...dinos, personData]);
       });
     });
   };
