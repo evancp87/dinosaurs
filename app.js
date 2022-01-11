@@ -14,18 +14,19 @@ class Dinosaur {
 //  Dino Compare Method 1
 
 Dinosaur.prototype.compareDiet = function (human) {
-  if (human.diet === "Herbavor") {
+  if (human.diet === "Herbavor" && this.diet === "herbavor") {
     this.diet = "You both enjoy a plant based diet!";
     return this.diet;
-  } else if (human.diet === "Omnivor") {
+  } else if (human.diet === "Omnivor" && this.diet === "omnivor") {
     this.diet = "You both have a balanced diet of 🥩 and 🥦!";
     return this.diet;
-  } else if (human.diet === "Carnivor") {
+  } else if (human.diet === "Carnivor" && this.diet === "carnivor") {
     this.diet = "You both like your 🍔 🍗 🥩!";
     return this.diet;
-  } 
+  } else {
+    return this.fact;
+  }
 };
-
 
 //  Dino Compare Method 2
 Dinosaur.prototype.compareWeight = function (human) {
@@ -45,7 +46,6 @@ Dinosaur.prototype.compareWeight = function (human) {
   }
 };
 
-
 //  Dino Compare Method 3
 Dinosaur.prototype.compareHeight = function (human) {
   if (human.height > this.height) {
@@ -63,8 +63,6 @@ Dinosaur.prototype.compareHeight = function (human) {
     return this.height;
   }
 };
-
-
 
 // const getDinos = async () => {
 //   const fetchedData = await fetch("./dino.json");
@@ -96,7 +94,6 @@ const getDinos = fetch("./dino.json")
     console.log(error);
   });
 
-
 // Create Human Constructor
 
 class Human {
@@ -109,7 +106,6 @@ class Human {
     this.image = "images/human.png";
   }
 }
-
 
 // Get human data from form
 
@@ -129,13 +125,12 @@ function getPersonData() {
   return personObject;
 }
 
-
 // random facts for comparisons
 const randomFacts = (dino, human) => {
   const randomFactArray = [
-    dino.compareDiet(human),
-    dino.compareHeight(human),
     dino.compareWeight(human),
+    dino.compareHeight(human),
+    dino.compareDiet(human),
     dino.fact,
   ];
 
@@ -145,14 +140,10 @@ const randomFacts = (dino, human) => {
   return randomFactArray[randomFactGenerator];
 };
 
-
 // shuffle tiles function
 const shuffleTiles = (arr) => {
   arr.sort(() => Math.random() - 0.5);
 };
-// Generate Tiles for each Dino in Array
-
-
 
 // On button click, prepare and display infographic
 document.getElementById("btn").addEventListener("click", (e) => {
@@ -163,35 +154,37 @@ document.getElementById("btn").addEventListener("click", (e) => {
   };
   removeForm();
 
-// tileArray
+  // Generate Tiles for each Dino in Array
   const dinoTiles = (personData) => {
     getDinos.then((dinos) => {
       shuffleTiles(dinos);
       dinos.splice(4, 0, personData);
       dinos.map((dino) => {
-          
         const dinoGrid = document.getElementById("grid");
         const dinoTile = document.createElement("div");
         dinoTile.classList.add("grid-item");
-  
-        dinoTile.innerHTML = `<h3>${dino.species}</h3>
-                  <img src='images/${dino.species || 'human'}.png' alt='${
-          dino.species
-        } image'>
-                
-                  <p>${randomFacts(dino, dinos[4])}</p>`;
-                
-  
-        if (dino.species === "pigeon") {
-          dinoTile.innerHTML = `<p>All birds are dinosaurs</p>`;
+
+        if (dino.species === "Pigeon") {
+          dinoTile.innerHTML = `<p>All birds are dinosaurs</p>
+          <img src='images/${dino.species || "human"}.png' alt='${
+            dino.species
+          } image'> `;
         } else if (dino.species === "human") {
           dinoTile.innerHTML = `<h3>${personData.name}</h3>
-          <img src='images/${dino.species || 'human'}.png' alt='${dino.species} image'>      `;
+          <img src='images/${dino.species || "human"}.png' alt='${
+            dino.species
+          } image'>      `;
+        } else {
+          dinoTile.innerHTML = `<h3>${dino.species}</h3>
+                  <img src='images/${dino.species || "human"}.png' alt='${
+            dino.species
+          } image'>
+                
+       <p>${randomFacts(dino, dinos[4])}</p>`;
         }
-      
-  
+
         dinoGrid.appendChild(dinoTile);
-        return newArray = [...dinos, personData];
+        return (newArray = [...dinos, personData]);
       });
     });
   };
