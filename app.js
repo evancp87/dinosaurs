@@ -148,6 +148,11 @@ const shuffleTiles = (arr) => {
 // On button click, prepare and display infographic
 document.getElementById("btn").addEventListener("click", (e) => {
   e.preventDefault();
+
+  if (name.value === '' || feet.value === '' || inches.value === '' || weight.value === '' || diet.value === '') {
+    alert('Please fill in all fields');
+    return false;
+  } 
   let removeForm = () => {
     const formRemove = (document.getElementById("dino-compare").style.display =
       "none");
